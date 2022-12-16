@@ -1,10 +1,12 @@
 package me.alfredobejarano.sdefleet.domain
 
+import javax.inject.Inject
+
 /**
  * Use case that extracts a Street name from an address.
  * Ex. 63187 Volkman Garden Suite 447 returns Volkman Garden.
  */
-class ExtractStreetNameFromShipmentUseCase {
+class ExtractStreetNameFromShipmentUseCase @Inject constructor() {
     private val interiorAbbreviations = arrayOf("Suite", "Apt.")
 
     /**
