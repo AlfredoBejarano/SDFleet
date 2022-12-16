@@ -18,7 +18,7 @@ class CalculateSuitabilityScoreUseCase @Inject constructor(
         val isStreetAddressSizeEven = streetAddressSize % 2 == 0
 
         val baseSuitabilityScore = if (isStreetAddressSizeEven) {
-            driverName.map { char -> vowels.contains(char) }.size * 1.5f
+            driverName.filter { char -> vowels.contains(char) }.length * 1.5f
         } else {
             driverName.map { char -> !vowels.contains(char) }.size * 1f
         }
