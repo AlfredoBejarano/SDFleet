@@ -1,10 +1,8 @@
 package me.alfredobejarano.sdefleet.domain
 
-import me.alfredobejarano.sdefleet.repository.FleetRepository
 import javax.inject.Inject
 
 class FindBestSuitabilityScoreUseCase @Inject constructor(
-    private val fleetRepository: FleetRepository,
     private val calculateSuitabilityScoreUseCase: CalculateSuitabilityScoreUseCase
 ) {
     /**
@@ -12,11 +10,11 @@ class FindBestSuitabilityScoreUseCase @Inject constructor(
      * @param driverName - The name of the driver.
      * @return Address of the shipment.]
      */
-    suspend fun findBestShipmentAddress(driverName: String): String {
+    fun findBestShipmentAddress(driverName: String, shipments: List<String>): String {
         var bestAddress = ""
         var highestSs = 0f
 
-        fleetRepository.getShipmentAddresses().forEach { address ->
+        shipments.forEach { address ->
             val ss = calculateSuitabilityScoreUseCase.calculateSuitabilityScore(driverName, address)
             if (ss > highestSs) {
                 highestSs = ss
