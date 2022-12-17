@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SDEFleet</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="main_activity_title_text">Open app with:</string>
+    <string name="compose">Compose</string>
+    <string name="view_system">Android View System</string>
 </resources>

@@ -31,24 +31,20 @@ class FleetDataSourceTest {
 
     @Test
     fun `Proper Object built from proper JSON file`() {
-        try {
-            val expected = Fleet(
-                drivers = listOf("Jane Doe", "John Doe"),
-                shipments = listOf("123 Oak Street Apt. 21", "241 Mahogany Street Suite 2")
-            )
+        val expected = Fleet(
+            drivers = listOf("Jane Doe", "John Doe"),
+            shipments = listOf("123 Oak Street Apt. 21", "241 Mahogany Street Suite 2")
+        )
 
-            val fleet = candidate?.fleet
-            assert(fleet != null)
+        val fleet = candidate?.fleet
+        assert(fleet != null)
 
-            fleet?.drivers?.forEachIndexed { index, driver ->
-                assert(expected.drivers[index] == driver)
-            }
+        fleet?.drivers?.forEachIndexed { index, driver ->
+            assert(expected.drivers[index] == driver)
+        }
 
-            fleet?.shipments?.forEachIndexed { index, shipment ->
-                assert(expected.shipments[index] == shipment)
-            }
-        } catch (t: Throwable) {
-            t.printStackTrace()
+        fleet?.shipments?.forEachIndexed { index, shipment ->
+            assert(expected.shipments[index] == shipment)
         }
     }
 }
