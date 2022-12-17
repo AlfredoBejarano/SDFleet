@@ -1,0 +1,10 @@
+{
+  "shipments": [
+    "123 Oak Street Apt. 21",
+    "241 Mahogany Street Suite 2"
+  ],
+  "drivers": [
+    "Jane Doe",
+    "John Doe"
+  ]
+}

@@ -11,13 +11,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class MatchDriverWithShipmentUseCaseTest {
-    private var mockitoMocks: AutoCloseable? = null
-
     private val extractStreetNameFromShipmentUseCase = ExtractStreetNameFromShipmentUseCase()
     private val calculateSsUseCase =
         CalculateSuitabilityScoreUseCase(extractStreetNameFromShipmentUseCase)
@@ -30,7 +27,6 @@ class MatchDriverWithShipmentUseCaseTest {
 
     @Before
     fun setUp() {
-        mockitoMocks = MockitoAnnotations.openMocks(this)
         candidate =
             MatchDriverWithShipmentUseCase(mockRepository, findBestSsUseCase, calculateSsUseCase)
     }
@@ -38,8 +34,6 @@ class MatchDriverWithShipmentUseCaseTest {
     @After
     fun tearDown() {
         candidate = null
-        mockitoMocks?.close()
-        mockitoMocks = null
     }
 
     /**
@@ -84,8 +78,8 @@ class MatchDriverWithShipmentUseCaseTest {
         val assignment = candidate?.matchDriverWithShipment()
 
         assignment?.forEach { entry ->
-            if(entry.value == "Jane Doe") assert(entry.key == "123 Oak Street Apt. 21")
-            if(entry.value == "John Doe") assert(entry.key == "241 Mahogany Street Suite 2")
+            if (entry.value == "Jane Doe") assert(entry.key == "123 Oak Street Apt. 21")
+            if (entry.value == "John Doe") assert(entry.key == "241 Mahogany Street Suite 2")
         }
     }
 }
