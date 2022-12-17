@@ -17,7 +17,7 @@ class FleetRepository @Inject constructor(private val fleetDataSource: FleetData
      * @return - Said list of items or an Exception if something went wrong fetching the fleet object.
      */
     private suspend fun getFleetDataList(dataSource: () -> List<String>) =
-        suspendCancellableCoroutine { continuation ->
+        suspendCancellableCoroutine<List<String>> { continuation ->
             try {
                 continuation.resume(dataSource())
             } catch (t: Throwable) {

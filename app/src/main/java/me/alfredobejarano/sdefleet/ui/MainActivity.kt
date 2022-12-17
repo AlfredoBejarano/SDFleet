@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     end = parent.end,
                     top = parent.top,
                     bottom = parent.bottom,
-                    verticalBias = 0.2f
+                    verticalBias = 0.25f
                 )
             }
         )
@@ -47,8 +47,7 @@ class MainActivity : ComponentActivity() {
                     start = parent.start,
                     end = parent.end,
                     top = title.bottom,
-                    bottom = parent.bottom,
-                    verticalBias = 0.25f
+                    bottom = viewSystemButton.top
                 )
             }
         ) {
@@ -61,7 +60,7 @@ class MainActivity : ComponentActivity() {
                 linkTo(
                     start = parent.start,
                     end = parent.end,
-                    top = title.bottom,
+                    top = composeButton.bottom,
                     bottom = parent.bottom
                 )
             }
