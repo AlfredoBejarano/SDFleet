@@ -3,74 +3,31 @@ package me.alfredobejarano.sdefleet.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.constraintlayout.compose.ConstraintLayout
-import me.alfredobejarano.sdefleet.R
-import me.alfredobejarano.sdefleet.ui.compose.theme.AppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val viewModel: AssignmentsViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { AppTheme { Content() } }
-    }
+        setContent {
+            val shipments by remember { viewModel.shipmentList }
 
-    @Preview
-    @Composable
-    fun Content() = ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        val (title, composeButton, viewSystemButton) = createRefs()
-
-        Text(
-            color = MaterialTheme.colors.onBackground,
-            text = stringResource(id = R.string.title_activity_main),
-            modifier = Modifier.constrainAs(title) {
-                linkTo(
-                    start = parent.start,
-                    end = parent.end,
-                    top = parent.top,
-                    bottom = parent.bottom,
-                    verticalBias = 0.25f
-                )
+            AppTheme {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(shipments) { shipment -> DriverListItem(shipment) }
+                }
             }
-        )
 
-        Button(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.constrainAs(composeButton) {
-                linkTo(
-                    start = parent.start,
-                    end = parent.end,
-                    top = title.bottom,
-                    bottom = parent.bottom,
-                    verticalBias = 0.25f
-                )
-            }
-        ) {
-            Text(text = stringResource(id = R.string.compose))
-        }
-
-        Button(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.constrainAs(viewSystemButton) {
-                linkTo(
-                    start = parent.start,
-                    end = parent.end,
-                    top = composeButton.bottom,
-                    bottom = parent.bottom,
-                    verticalBias = 0.1f
-                )
-            }
-        ) {
-            Text(text = stringResource(id = R.string.view_system))
+            viewModel.getShipments()
         }
     }
 }

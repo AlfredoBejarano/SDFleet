@@ -1,20 +1,30 @@
 package me.alfredobejarano.sdefleet.ui
 
-import androidx.lifecycle.LiveData
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import me.alfredobejarano.sdefleet.domain.MatchDriverWithShipmentUseCase
+import me.alfredobejarano.sdefleet.model.Shipment
 import javax.inject.Inject
 
 @HiltViewModel
 class AssignmentsViewModel @Inject constructor(
     private val matchDriverWithShipmentUseCase: MatchDriverWithShipmentUseCase
 ) : ViewModel() {
-    fun getAssignments(): LiveData<List<Pair<String, String>>> = liveData(Dispatchers.IO) {
-        val itinerary = matchDriverWithShipmentUseCase.matchDriverWithShipment()
-            .map { it.key to it.value }
-        emit(itinerary)
+    private val _shipmentList = mutableStateOf(listOf<Shipment>())
+    val shipmentList: State<List<Shipment>> = _shipmentList
+
+    fun getShipments() {
+        viewModelScope.launch {
+            val shipments = matchDriverWithShipmentUseCase.matchDriverWithShipment()
+                .map { entry ->
+                    println("${entry.key} - ${entry.value}")
+                    Shipment(driver = entry.value, address = entry.key)
+                }
+            _shipmentList.value = shipments
+        }
     }
 }

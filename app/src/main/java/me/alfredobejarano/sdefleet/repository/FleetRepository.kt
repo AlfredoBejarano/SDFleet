@@ -35,5 +35,5 @@ class FleetRepository @Inject constructor(private val fleetDataSource: FleetData
      * Returns the list of shipment addresses from the fleet.
      * @return List of shipment addresses or an Exception related to fetching the fleet.
      */
-    suspend fun getShipmentAddresses() = getFleetDataList { fleetDataSource.fleet.drivers }
+    suspend fun getShipmentAddresses() = getFleetDataList { fleetDataSource.fleet.shipments }
 }
